@@ -1,0 +1,19 @@
+body{
+	background: url("../images/sakura.png");
+}
+
+.title-card{
+	width: 90%;
+	height: auto;
+	margin: 35px 0;
+}
+.welcome{
+	z-index: 99;
+	position: fixed;
+	margin: 0 auto;
+	top: 45%;
+	left: 35%;
+	right: 35%;
+	background: white;
+	padding: 10px;
+}
