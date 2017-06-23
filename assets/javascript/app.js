@@ -48,7 +48,8 @@ var ansTimeout;
 
 // var possibleChoices;
 var choice;
-var picked;
+// var picked;
+var inTime = true 
 // var choice1;
 // var choice2;
 // var choice3;
@@ -74,10 +75,16 @@ function game(){
 	$('.game').empty()
 
 	var slideShow = function() {
-				if (i <= limit && i != limit) {
+		if (i <= limit){
 			setTimeout(slideShow, delay);
-
 		}
+
+		if (inTime === false){
+			i++
+			inTime = true
+			ansTimeout++
+		}
+		
 
 		console.log('i - in for loop or while loop',i);
 
@@ -99,72 +106,20 @@ function game(){
 			if ($(this).attr('dataName') === Object.values(triviaQuestions)[i].correct){
 				ansCorrect++
 				i++
+				inTime = true
 				slideShow()
-
 			}
 			else{
 				ansIncorrect++
 				i++
+				inTime = true
 				slideShow()
 			}
 		})
-		// setTimeout(slideShow, delay);
 
-		// //WORK IN PROGRESS - START
-		// $('#start choice-a').click(function() {
-		// 	userChoice = 'a';
-		// 	i++;
-		// });
+		inTime = false
 
-		// $('#start choice-b').click(function() {
-		// 	userChoice = 'b';
-		// 	i++;
-		// });
-
-		// $('#start choice-c').click(function() {
-		// 	userChoice = 'c';
-		// 	i++;
-		// });
-
-		// $('#start choice-d').click(function() {
-		// 	userChoice = 'd';
-		// 	i++;
-		// });
-
-		// if (i === 0 && userChoice === 'b') {
-		// 	//display correct image - applies to below also
-		// 	correctCount++;
-		// }
-
-		// else if (i === 1 && userChoice === 'a') {
-		// 	correctCount++;
-		// }
-
-		// else if (i === 2 && userChoice === 'b') {
-		// 	correctCount++;
-		// }
-
-		// else if (i === 3 && userChoice === 'a') {
-		// 	correctCount++;
-		// }
-
-		// else if (i === 4 && userChoice === 'd') {
-		// 	correctCount++
-		// }
-		// //add else if for time running out here; assuming I ahve time
-
-		// else if (i === 5) {
-		// 	//put in the counter html
-		// 	$('row').html();
-			
-		// }
-
-		// else {
-		// 	incorrectCount++;
-		// }
-		//WORK IN PROGRESS - END
-
-		console.log("counter");
+		// console.log("counter");
 	}
 	// setTimeout(slideShow, delay);
 	slideShow();
