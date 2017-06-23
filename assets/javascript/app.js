@@ -46,6 +46,20 @@ var ansCorrect;
 var ansIncorrect;
 var ansTimeout;
 
+var possibleChoices;
+
+var choice2;
+var choice3;
+var choice4;
+// game()
+
+$(document).ready(function(){
+	$('.welcome').on("click", function(){
+		game()
+	})
+})
+
+
 function game(){
 	ansCorrect = 0
 	ansIncorrect = 0
@@ -69,11 +83,11 @@ function game(){
 		}
 
 		console.log('i - before jQuery', i);
-		$('h2').html(Object.keys(triviaQuestions)[i]);
-		$('div#start').html('<h3>' + Object.values(triviaQuestions)[i].answers[0] + '</h3>');
-		$(possibleChoices.possibility2).appendTo('div#start');
-		$(possibleChoices.possibility3).appendTo('div#start');
-		$(possibleChoices.possibility4).appendTo('div#start');
+		$('.welcome').html('<h1>' + Object.values(triviaQuestions)[i].question);
+		$('.game').html('<h3>' + Object.values(triviaQuestions)[i].answers[0] + '</h3>');
+		$(possibleChoices.possibility2).appendTo('.game');
+		$(possibleChoices.possibility3).appendTo('.game');
+		$(possibleChoices.possibility4).appendTo('.game');
 
 		if (i <= limit && i != limit) {
 			setTimeout(slideShow, delay);
@@ -81,58 +95,58 @@ function game(){
 
 		i++;
 
-		//WORK IN PROGRESS - START
-		$('#start choice-a').click(function() {
-			userChoice = 'a';
-			i++;
-		});
+		// //WORK IN PROGRESS - START
+		// $('#start choice-a').click(function() {
+		// 	userChoice = 'a';
+		// 	i++;
+		// });
 
-		$('#start choice-b').click(function() {
-			userChoice = 'b';
-			i++;
-		});
+		// $('#start choice-b').click(function() {
+		// 	userChoice = 'b';
+		// 	i++;
+		// });
 
-		$('#start choice-c').click(function() {
-			userChoice = 'c';
-			i++;
-		});
+		// $('#start choice-c').click(function() {
+		// 	userChoice = 'c';
+		// 	i++;
+		// });
 
-		$('#start choice-d').click(function() {
-			userChoice = 'd';
-			i++;
-		});
+		// $('#start choice-d').click(function() {
+		// 	userChoice = 'd';
+		// 	i++;
+		// });
 
-		if (i === 0 && userChoice === 'b') {
-			//display correct image - applies to below also
-			correctCount++;
-		}
+		// if (i === 0 && userChoice === 'b') {
+		// 	//display correct image - applies to below also
+		// 	correctCount++;
+		// }
 
-		else if (i === 1 && userChoice === 'a') {
-			correctCount++;
-		}
+		// else if (i === 1 && userChoice === 'a') {
+		// 	correctCount++;
+		// }
 
-		else if (i === 2 && userChoice === 'b') {
-			correctCount++;
-		}
+		// else if (i === 2 && userChoice === 'b') {
+		// 	correctCount++;
+		// }
 
-		else if (i === 3 && userChoice === 'a') {
-			correctCount++;
-		}
+		// else if (i === 3 && userChoice === 'a') {
+		// 	correctCount++;
+		// }
 
-		else if (i === 4 && userChoice === 'd') {
-			correctCount++
-		}
-		//add else if for time running out here; assuming I ahve time
+		// else if (i === 4 && userChoice === 'd') {
+		// 	correctCount++
+		// }
+		// //add else if for time running out here; assuming I ahve time
 
-		else if (i === 5) {
-			//put in the counter html
-			$('row').html();
+		// else if (i === 5) {
+		// 	//put in the counter html
+		// 	$('row').html();
 			
-		}
+		// }
 
-		else {
-			incorrectCount++;
-		}
+		// else {
+		// 	incorrectCount++;
+		// }
 		//WORK IN PROGRESS - END
 
 		console.log("counter");
@@ -141,5 +155,3 @@ function game(){
 	slideShow();
 
 }
-game()
-$('.welcome').on("click",game());
