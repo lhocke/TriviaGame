@@ -46,11 +46,13 @@ var ansCorrect;
 var ansIncorrect;
 var ansTimeout;
 
-var possibleChoices;
-
-var choice2;
-var choice3;
-var choice4;
+// var possibleChoices;
+var choice;
+var picked;
+// var choice1;
+// var choice2;
+// var choice3;
+// var choice4;
 // game()
 
 $(document).ready(function(){
@@ -68,32 +70,45 @@ function game(){
 	var i = 0;
 	var limit = Object.keys((triviaQuestions).length - 1);
 	var delay = 5000;//change to allow for more time!
-	var picked;
+	// var picked;
+	$('.game').empty()
 
 	var slideShow = function() {
-		console.log('i - in for loop or while loop',i);
-		choice2 = Object.values(triviaQuestions)[i].answers[1];
-		choice3 = Object.values(triviaQuestions)[i].answers[2];
-		choice4 = Object.values(triviaQuestions)[i].answers[3];
+				if (i <= limit && i != limit) {
+			setTimeout(slideShow, delay);
 
-		possibleChoices = {
-			possibility2 : '<h3>' + choice2 + '</h3>',
-			possibility3 : '<h3>' + choice3 + '</h3>',
-			possibility4 : '<h3>' + choice4 + '</h3>',
 		}
+
+		console.log('i - in for loop or while loop',i);
 
 		console.log('i - before jQuery', i);
 		$('.welcome').html('<h1>' + Object.values(triviaQuestions)[i].question);
-		$('.game').html('<h3>' + Object.values(triviaQuestions)[i].answers[0] + '</h3>');
-		$(possibleChoices.possibility2).appendTo('.game');
-		$(possibleChoices.possibility3).appendTo('.game');
-		$(possibleChoices.possibility4).appendTo('.game');
-
-		if (i <= limit && i != limit) {
-			setTimeout(slideShow, delay);
+		$('.game').empty()
+		for (var x = 0; x < Object.values(triviaQuestions)[i].answers.length; x++){
+			var question = $('<h3 class="picker">')
+			question.append(Object.values(triviaQuestions)[i].answers[x]);
+			// console.log(question)
+			question.attr('dataName', Object.values(triviaQuestions)[i].answers[x])
+			$('.game').append(question);
 		}
 
-		i++;
+		$('.picker').on("click", function(){
+			console.log(i)
+			console.log($(this).attr('dataName'))
+			// console.log($('picker').attr('dataName'))
+			if ($(this).attr('dataName') === Object.values(triviaQuestions)[i].correct){
+				ansCorrect++
+				i++
+				slideShow()
+
+			}
+			else{
+				ansIncorrect++
+				i++
+				slideShow()
+			}
+		})
+		// setTimeout(slideShow, delay);
 
 		// //WORK IN PROGRESS - START
 		// $('#start choice-a').click(function() {
@@ -151,7 +166,7 @@ function game(){
 
 		console.log("counter");
 	}
-
+	// setTimeout(slideShow, delay);
 	slideShow();
 
 }
