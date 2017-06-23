@@ -31,13 +31,13 @@ var triviaQuestions = {
 	},
 	q7: {
 		question : "The Sistine Chapel has caused some contreversy in recent years for what image?",
-		correct : "The interpratation of Adam and God as large brain shapes",
-		answers : ["The depiction of hell", "The insclusion of Cardinals in Hell", "The interpratation of Adam and God as large brain shapes", "A lack of recognition of the Crusades"]
+		correct : "The interpretation of Adam and God as large brain shapes",
+		answers : ["The depiction of hell", "The insclusion of Cardinals in Hell", "The interpretation of Adam and God as large brain shapes", "A lack of recognition of the Crusades"]
 	},
 	q8: {
-		question : "In what dynsaty was the Terracotta Army created?",
-		correct : "",
-		answers : []
+		question : "In what dynasty was the Terracotta Army created?",
+		correct : "Qin",
+		answers : ["Qin", "Ming", "Xiao", "Yang"]
 	}
 
 }
@@ -46,37 +46,41 @@ var ansCorrect;
 var ansIncorrect;
 var ansTimeout;
 
-// var possibleChoices;
 var choice;
-// var picked;
 var inTime = true 
-// var choice1;
-// var choice2;
-// var choice3;
-// var choice4;
-// game()
 
+// hold functions until loaded and then wait for click
 $(document).ready(function(){
 	$('.welcome').on("click", function(){
 		game()
 	})
 })
 
-
+// Core Game
 function game(){
-	ansCorrect = 0
-	ansIncorrect = 0
-	ansTimeout = 0
+	ansCorrect = 0;
+	ansIncorrect = 0;
+	ansTimeout = 0;
+
+	timerRunning = false
 
 	var i = 0;
-	var limit = Object.keys((triviaQuestions).length - 1);
+	var limit = Object.keys(triviaQuestions).length - 1;
 	var delay = 5000;//change to allow for more time!
-	// var picked;
 	$('.game').empty()
 
 	var slideShow = function() {
 		if (i <= limit){
-			setTimeout(slideShow, delay);
+			timer = setTimeout(slideShow, delay)
+		}
+
+		else {
+			clearTimeout(timer)
+			$('.welcome').empty()
+			$('.game').html('<div class="end">');
+			$('.end').append('<h1>Correct: ' + ansCorrect);
+			$('.end').append('<h1>Incorrect: ' + ansIncorrect);
+			$('.end').append('<h1>Timed Out: ' + ansTimeout);
 		}
 
 		if (inTime === false){
@@ -86,15 +90,11 @@ function game(){
 		}
 		
 
-		console.log('i - in for loop or while loop',i);
-
-		console.log('i - before jQuery', i);
 		$('.welcome').html('<h1>' + Object.values(triviaQuestions)[i].question);
 		$('.game').empty()
 		for (var x = 0; x < Object.values(triviaQuestions)[i].answers.length; x++){
 			var question = $('<h3 class="picker">')
 			question.append(Object.values(triviaQuestions)[i].answers[x]);
-			// console.log(question)
 			question.attr('dataName', Object.values(triviaQuestions)[i].answers[x])
 			$('.game').append(question);
 		}
@@ -102,26 +102,19 @@ function game(){
 		$('.picker').on("click", function(){
 			console.log(i)
 			console.log($(this).attr('dataName'))
-			// console.log($('picker').attr('dataName'))
 			if ($(this).attr('dataName') === Object.values(triviaQuestions)[i].correct){
 				ansCorrect++
 				i++
-				inTime = true
+				clearTimeout(timer)
 				slideShow()
 			}
 			else{
 				ansIncorrect++
 				i++
-				inTime = true
+				clearTimeout(timer)
 				slideShow()
 			}
 		})
-
-		inTime = false
-
-		// console.log("counter");
 	}
-	// setTimeout(slideShow, delay);
 	slideShow();
-
 }
