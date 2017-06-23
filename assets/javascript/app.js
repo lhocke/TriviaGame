@@ -7,17 +7,17 @@ var triviaQuestions = {
 	q2: {
 		question : "Which of the following was painted by Vincent Van Gogh?",
 		correct : "Starry Night",
-		answers : ["Starry Night", "Water Lillies", "The Persistance of Memory", "On the River Blue"]
+		answers : ["Water Lillies", "Starry Night", "The Persistance of Memory", "On the River Blue"]
 	},
 	q3: {
 		question : "Who painted the Mona Lisa?",
 		correct : "Leonardo da Vinci",
-		answers: ["Leonardo da Vinci", "Pablo Picasso", "Caravaggio", "Raphael"],
+		answers: ["Pablo Picasso", "Caravaggio", "Raphael", "Leonardo da Vinci"],
 	},
 	q4: {
 		question : "Who is the creator of the statue of David?",
 		correct : "Michaelangelo",
-		answers : ["Michaelangelo", "Leornardo da Vinci", "Donatello", "Raphael"],
+		answers : ["Leornardo da Vinci", "Donatello", "Michaelangelo", "Raphael"],
 	},
 	q5: {
 		question: "What famous event from the Bible did Leonardo da Vinci paint?",
@@ -45,18 +45,16 @@ var triviaQuestions = {
 var ansCorrect;
 var ansIncorrect;
 var ansTimeout;
+var inTime;
 
-var choice;
-var inTime = true 
-
-// hold functions until loaded and then wait for click
+// Holds js until loaded and clicked
 $(document).ready(function(){
 	$('.welcome').on("click", function(){
 		game()
 	})
 })
 
-// Core Game
+// core game
 function game(){
 	ansCorrect = 0;
 	ansIncorrect = 0;
@@ -68,15 +66,17 @@ function game(){
 	var limit = Object.keys(triviaQuestions).length - 1;
 	var delay = 5000;//change to allow for more time!
 	$('.game').empty()
+	$('.welcome').remove()
 
+	// changing of questions
 	var slideShow = function() {
 		if (i <= limit){
 			timer = setTimeout(slideShow, delay)
 		}
 
-		else {
+		else{
 			clearTimeout(timer)
-			$('.welcome').empty()
+			$('.new').empty()
 			$('.game').html('<div class="end">');
 			$('.end').append('<h1>Correct: ' + ansCorrect);
 			$('.end').append('<h1>Incorrect: ' + ansIncorrect);
@@ -85,12 +85,14 @@ function game(){
 
 		if (inTime === false){
 			i++
-			inTime = true
 			ansTimeout++
 		}
 		
 
-		$('.welcome').html('<h1>' + Object.values(triviaQuestions)[i].question);
+		console.log('i - in for loop or while loop',i);
+
+		console.log('i - before jQuery', i);
+		$('.new').html('<h1>' + Object.values(triviaQuestions)[i].question);
 		$('.game').empty()
 		for (var x = 0; x < Object.values(triviaQuestions)[i].answers.length; x++){
 			var question = $('<h3 class="picker">')
@@ -105,16 +107,26 @@ function game(){
 			if ($(this).attr('dataName') === Object.values(triviaQuestions)[i].correct){
 				ansCorrect++
 				i++
+				inTime = true
 				clearTimeout(timer)
-				slideShow()
+				$('.new').empty()
+				$('.game').html('<h1>GOOD JOB!')
+				setTimeout(slideShow,2000)
 			}
 			else{
 				ansIncorrect++
 				i++
+				inTime = true
 				clearTimeout(timer)
-				slideShow()
+				$('.new').empty()
+				$('.game').html('<h1>SORRY!')
+				setTimeout(slideShow,2000)
 			}
 		})
+
+		inTime = false
+
 	}
 	slideShow();
+
 }
